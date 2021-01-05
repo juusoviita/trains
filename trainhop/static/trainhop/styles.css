@@ -1,0 +1,59 @@
+#station-list {
+  margin: 15px;
+}
+.station {
+  background-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 4px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid darkgray;
+  font-size: large;
+}
+
+.station:hover {
+  cursor: pointer;
+  background-color: coral;
+}
+
+small {
+  color: gray;
+  font-size: xx-small;
+}
+
+#result-view {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 2px solid gray;
+  padding-bottom: 10px;
+}
+
+.headline {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.toprow {
+  font-weight: bold;
+  border-bottom: 1px solid darkgray;
+}
+
+.timetable-even {
+  background-color: lightgray;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.timetable-odd {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.red {
+  color: crimson;
+  font-weight: bold;
+}
