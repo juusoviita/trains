@@ -99,19 +99,25 @@ def timetable(request):
                                                'scheduledTime': scheduledTime, 'estimateTime': liveEstimateTime, 'timeDifference': difference, 'destinationStation': destinationStation})
 
         # sort arrivals and departures based on scheduledTime and ad to a dict
-        arrivals = sorted(arrivals, key=itemgetter('scheduledTime'))
-        arrivals_dict = {}
-        i = 0
-        for arrival in arrivals:
-            arrivals_dict[i] = arrival
-            i += 1
+        if len(arrivals) == 0:
+            arrivals_dict = {'message': 'No arrivals'}
+        else:
+            arrivals = sorted(arrivals, key=itemgetter('scheduledTime'))
+            arrivals_dict = {}
+            i = 0
+            for arrival in arrivals:
+                arrivals_dict[i] = arrival
+                i += 1
 
-        departures = sorted(departures, key=itemgetter('scheduledTime'))
-        departures_dict = {}
-        j = 0
-        for departure in departures:
-            departures_dict[j] = departure
-            j += 1
+        if len(departures) == 0:
+            departures_dict = {'message': 'No departures'}
+        else:
+            departures = sorted(departures, key=itemgetter('scheduledTime'))
+            departures_dict = {}
+            j = 0
+            for departure in departures:
+                departures_dict[j] = departure
+                j += 1
 
         timetable = {'arrivals': arrivals_dict,
                      'departures': departures_dict}

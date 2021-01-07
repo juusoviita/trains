@@ -63,89 +63,101 @@ function timetable(code, name) {
     .then(station => {
       // first, loop through the arrivals side of the json and create the arrivals view
       var arr_div = document.getElementById('arrivals');
-      arr_div.innerHTML = '<h5 class="headline">Arrivals</h5>';
-      var a_length = Object.keys(station.arrivals).length;
-      // create the toprow for the view
-      var app_top = document.createElement('div');
-      app_top.classList.add('toprow');
-      app_top.innerHTML = `<div class="row">
-                            <div class="col-2">Scheduled</div>
-                            <div class="col-2 d-flex justify-content-center">Train</div>
-                            <div class="col-4">Departure Station</div>
-                            <div class="col-2 d-flex justify-content-center">Track</div>
-                            <div class="col-2"></div>
-                        </div>`;
-      arr_div.appendChild(app_top);
 
-      for (i = 0; i < a_length; i++) {
-        var scheduledTime = station.arrivals[i]['scheduledTime'];
-        var trainID = station.arrivals[i]['id'];
-        var departureStation = station.arrivals[i]['departureStation'];
-        var track = station.arrivals[i]['track'];
-        if (station.arrivals[i]['timeDifference'] != '') {
-          var estimateTime = station.arrivals[i]['estimateTime'];
-        } else {
-          var estimateTime = '';
+
+      if ("message" in station.arrivals) {
+        arr_div.innerHTML = `<h5 class="headline">Arrivals</h5>
+                                <i style="color:crimson;">${station.arrivals.message}</i>`;
+      } else {
+        arr_div.innerHTML = '<h5 class="headline">Arrivals</h5>';
+        var a_length = Object.keys(station.arrivals).length;
+        // create the toprow for the view
+        var app_top = document.createElement('div');
+        app_top.classList.add('toprow');
+        app_top.innerHTML = `<div class="row">
+                              <div class="col-2">Scheduled</div>
+                              <div class="col-2 d-flex justify-content-center">Train</div>
+                              <div class="col-4">Departure Station</div>
+                              <div class="col-2 d-flex justify-content-center">Track</div>
+                              <div class="col-2"></div>
+                          </div>`;
+        arr_div.appendChild(app_top);
+
+        for (i = 0; i < a_length; i++) {
+          var scheduledTime = station.arrivals[i]['scheduledTime'];
+          var trainID = station.arrivals[i]['id'];
+          var departureStation = station.arrivals[i]['departureStation'];
+          var track = station.arrivals[i]['track'];
+          if (station.arrivals[i]['timeDifference'] != '') {
+            var estimateTime = station.arrivals[i]['estimateTime'];
+          } else {
+            var estimateTime = '';
+          }
+
+          var arr_row = document.createElement('div');
+          if (i % 2 == 0) {
+            arr_row.classList.add('timetable-even');
+          } else {
+            arr_row.classList.add('timetable-odd');
+          }
+
+          arr_row.innerHTML = `<div class="row">
+                                  <div class="col-2">${scheduledTime}</div>
+                                  <div class="col-2 d-flex justify-content-center">${trainID}</div>
+                                  <div class="col-4">${departureStation}</div>
+                                  <div class="col-2 d-flex justify-content-center">${track}</div>
+                                  <div class="col-2 d-flex justify-content-center"><span class="red">${estimateTime}</span></div>
+                              </div>`;
+          arr_div.appendChild(arr_row);
         }
-
-        var arr_row = document.createElement('div');
-        if (i % 2 == 0) {
-          arr_row.classList.add('timetable-even');
-        } else {
-          arr_row.classList.add('timetable-odd');
-        }
-
-        arr_row.innerHTML = `<div class="row">
-                                <div class="col-2">${scheduledTime}</div>
-                                <div class="col-2 d-flex justify-content-center">${trainID}</div>
-                                <div class="col-4">${departureStation}</div>
-                                <div class="col-2 d-flex justify-content-center">${track}</div>
-                                <div class="col-2 d-flex justify-content-center"><span class="red">${estimateTime}</span></div>
-                            </div>`;
-        arr_div.appendChild(arr_row);
       }
       // then, loop through the departures side of the json and create the departures view
       var dep_div = document.getElementById('departures');
-      dep_div.innerHTML = '<h5 class="headline">Departures</h5>';
-      var d_length = Object.keys(station.departures).length;
-      // create the toprow for the view
-      var dep_top = document.createElement('div');
-      dep_top.classList.add('toprow');
-      dep_top.innerHTML = `<div class="row">
+      if ("message" in station.departures) {
+        dep_div.innerHTML = `<h5 class="headline">Departures</h5>
+                                <i style="color:crimson;">${station.departures.message}</i>`;
+      } else {
+        dep_div.innerHTML = '<h5 class="headline">Departures</h5>';
+        var d_length = Object.keys(station.departures).length;
+        // create the toprow for the view
+        var dep_top = document.createElement('div');
+        dep_top.classList.add('toprow');
+        dep_top.innerHTML = `<div class="row">
                             <div class="col-2">Scheduled</div>
                             <div class="col-2 d-flex justify-content-center">Train</div>
                             <div class="col-4">Destination Station</div>
                             <div class="col-2 d-flex justify-content-center">Track</div>
                             <div class="col-2"></div>
                           </div>`;
-      dep_div.appendChild(dep_top);
-      for (i = 0; i < d_length; i++) {
-        var scheduledTime = station.departures[i]['scheduledTime'];
-        var trainID = station.departures[i]['id'];
-        var destinationStation = station.departures[i]['destinationStation'];
-        var track = station.departures[i]['track'];
+        dep_div.appendChild(dep_top);
+        for (i = 0; i < d_length; i++) {
+          var scheduledTime = station.departures[i]['scheduledTime'];
+          var trainID = station.departures[i]['id'];
+          var destinationStation = station.departures[i]['destinationStation'];
+          var track = station.departures[i]['track'];
 
-        if (station.departures[i]['timeDifference'] != '') {
-          var estimateTime = station.departures[i]['estimateTime'];
-        } else {
-          var estimateTime = '';
-        }
+          if (station.departures[i]['timeDifference'] != '') {
+            var estimateTime = station.departures[i]['estimateTime'];
+          } else {
+            var estimateTime = '';
+          }
 
-        var dep_row = document.createElement('div');
-        if (i % 2 == 0) {
-          dep_row.classList.add('timetable-even');
-        } else {
-          dep_row.classList.add('timetable-odd');
-        }
+          var dep_row = document.createElement('div');
+          if (i % 2 == 0) {
+            dep_row.classList.add('timetable-even');
+          } else {
+            dep_row.classList.add('timetable-odd');
+          }
 
-        dep_row.innerHTML = `<div class="row">
+          dep_row.innerHTML = `<div class="row">
                               <div class="col-2">${scheduledTime}</div>
                               <div class="col-2 d-flex justify-content-center">${trainID}</div>
                               <div class="col-4">${destinationStation}</div>
                               <div class="col-2 d-flex justify-content-center">${track}</div>
                               <div class="col-2 d-flex justify-content-center"><span class="red">${estimateTime}</span></div>
                           </div>`;
-        dep_div.appendChild(dep_row);
+          dep_div.appendChild(dep_row);
+        }
       }
     })
 }
