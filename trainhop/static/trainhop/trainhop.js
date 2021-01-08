@@ -49,10 +49,15 @@ function timetable(code, name) {
 
   document.getElementById('result-view').innerHTML = `<h4 class="headline">${name}</h4>
                                                         <div class="row">
-                                                        <div id="departures" class="col"></div>
-                                                        <div id="arrivals" class="col"></div>
+                                                        <div id="departures" class="col-sm"></div>
+                                                        <div id="arrivals" class="col-sm"></div>
                                                       </div>`;
 
+  // clear and hide the search box
+  document.getElementById('station-search').value = '';
+  document.getElementById('station-search').style.display = 'none';
+
+  // get the data from the API and display
   fetch('/timetable', {
     method: 'POST',
     body: JSON.stringify({
@@ -64,7 +69,6 @@ function timetable(code, name) {
       // first, loop through the arrivals side of the json and create the arrivals view
       var arr_div = document.getElementById('arrivals');
 
-
       if ("message" in station.arrivals) {
         arr_div.innerHTML = `<h5 class="headline">Arrivals</h5>
                                 <i style="color:crimson;">${station.arrivals.message}</i>`;
@@ -75,9 +79,9 @@ function timetable(code, name) {
         var app_top = document.createElement('div');
         app_top.classList.add('toprow');
         app_top.innerHTML = `<div class="row">
-                              <div class="col-2">Scheduled</div>
+                              <div class="col-2">Arrives</div>
                               <div class="col-2 d-flex justify-content-center">Train</div>
-                              <div class="col-4">Departure Station</div>
+                              <div class="col-4">From</div>
                               <div class="col-2 d-flex justify-content-center">Track</div>
                               <div class="col-2"></div>
                           </div>`;
@@ -89,7 +93,7 @@ function timetable(code, name) {
           var departureStation = station.arrivals[i]['departureStation'];
           var track = station.arrivals[i]['track'];
           if (station.arrivals[i]['timeDifference'] != '') {
-            var estimateTime = station.arrivals[i]['estimateTime'];
+            var estimateTime = '~' + station.arrivals[i]['estimateTime'];
           } else {
             var estimateTime = '';
           }
@@ -106,7 +110,7 @@ function timetable(code, name) {
                                   <div class="col-2 d-flex justify-content-center">${trainID}</div>
                                   <div class="col-4">${departureStation}</div>
                                   <div class="col-2 d-flex justify-content-center">${track}</div>
-                                  <div class="col-2 d-flex justify-content-center"><span class="red">${estimateTime}</span></div>
+                                  <div class="col-2"><span class="red">${estimateTime}</span></div>
                               </div>`;
           arr_div.appendChild(arr_row);
         }
@@ -123,9 +127,9 @@ function timetable(code, name) {
         var dep_top = document.createElement('div');
         dep_top.classList.add('toprow');
         dep_top.innerHTML = `<div class="row">
-                            <div class="col-2">Scheduled</div>
+                            <div class="col-2">Departs</div>
                             <div class="col-2 d-flex justify-content-center">Train</div>
-                            <div class="col-4">Destination Station</div>
+                            <div class="col-4">To</div>
                             <div class="col-2 d-flex justify-content-center">Track</div>
                             <div class="col-2"></div>
                           </div>`;
@@ -137,7 +141,7 @@ function timetable(code, name) {
           var track = station.departures[i]['track'];
 
           if (station.departures[i]['timeDifference'] != '') {
-            var estimateTime = station.departures[i]['estimateTime'];
+            var estimateTime = '~' + station.departures[i]['estimateTime'];
           } else {
             var estimateTime = '';
           }
@@ -154,7 +158,7 @@ function timetable(code, name) {
                               <div class="col-2 d-flex justify-content-center">${trainID}</div>
                               <div class="col-4">${destinationStation}</div>
                               <div class="col-2 d-flex justify-content-center">${track}</div>
-                              <div class="col-2 d-flex justify-content-center"><span class="red">${estimateTime}</span></div>
+                              <div class="col-2"><span class="red">${estimateTime}</span></div>
                           </div>`;
           dep_div.appendChild(dep_row);
         }

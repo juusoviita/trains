@@ -63,6 +63,8 @@ def timetable(request):
                                 tzinfo=utc)
                             liveEstimateTime = liveEstimateTime.astimezone(hki)
                             liveEstimateTime = liveEstimateTime.time()
+                            liveEstimateTime = time_conversion(
+                                liveEstimateTime)
                         except KeyError:
                             liveEstimateTime = ''
 
@@ -73,6 +75,7 @@ def timetable(request):
                         scheduledTime = scheduledTime.replace(tzinfo=utc)
                         scheduledTime = scheduledTime.astimezone(hki)
                         scheduledTime = scheduledTime.time()
+                        scheduledTime = time_conversion(scheduledTime)
 
                         # get the time difference between the estimate and scheduled times
                         try:
@@ -161,3 +164,22 @@ def station_name(stations, code):
                 name = station['stationName']
 
     return(name)
+
+
+def time_conversion(time):
+    if time.second >= 30:
+        if time.minute == 59:
+            minute = "0"
+            hour = str(time.hour + 1)
+        else:
+            minute = str(time.minute + 1)
+            hour = str(time.hour)
+    else:
+        minute = str(time.minute)
+        hour = str(time.hour)
+
+    if len(minute) == 1:
+        new_time = hour + ":" + "0" + minute
+    else:
+        new_time = hour + ":" + minute
+    return(new_time)

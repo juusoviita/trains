@@ -1,5 +1,7 @@
 #station-list {
-  margin: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
 }
 .station {
   background-color: white;
