@@ -1,33 +1,47 @@
+body {
+  background-image: url("background.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 #station-list {
+  background: rgba(255, 255, 255, 0.7);
   margin-top: 20px;
   margin-bottom: 20px;
-  padding-bottom: 10px;
+  padding: 7px 10px 10px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
 }
+
+small {
+  color: black;
+  font-size: xx-small;
+}
+
 .station {
-  background-color: white;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 4px;
-  padding-bottom: 5px;
+  background-color: transparent;
+  padding: 4px 10px 5px 10px;
   border-bottom: 1px solid darkgray;
   font-size: large;
 }
 
-.station:hover {
-  cursor: pointer;
-  background-color: coral;
+.station:hover small {
+  color: white;
 }
 
-small {
-  color: gray;
-  font-size: xx-small;
+.station:hover {
+  cursor: pointer;
+  background-color: rgba(0,153,51, 0.7);
+  color: white;
 }
 
 #result-view {
+  background: rgba(255, 255, 255, 0.7);
   margin-top: 20px;
   margin-bottom: 20px;
-  border: 2px solid gray;
-  padding-bottom: 10px;
+  padding: 7px 10px 10px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
 }
 
 .headline {
@@ -37,25 +51,35 @@ small {
 
 .toprow {
   font-weight: bold;
-  border-bottom: 1px solid darkgray;
+  border-bottom: 1px solid gray;
 }
 
 .timetable-even {
-  background-color: lightgray;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
+  background-color: gray;
+  color: white;
 }
 
-.timetable-odd {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
+.timetable-even, .timetable-odd {
+  padding: 5px 5px 5px 5px;
 }
 
 .red {
   color: crimson;
   font-weight: bold;
+}
+
+@media (orientation: portrait) {
+  body {
+    background-image: url("background2.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  #arrivals {
+    margin-top: 15px;
+  }
+  #result-view {
+    font-size:  6px;
+  }
 }

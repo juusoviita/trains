@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   // hide the results view and display the station list
   document.getElementById('result-view').style.display = 'none';
+  document.getElementById('result-view').innerHTML = '';
   document.getElementById('station-list').style.display = 'block';
 
   var station_list = document.getElementById('station-list');
@@ -23,9 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById(`${code}`).addEventListener('click', () => timetable(code, name));
       }
     })
+  // attach the station search field to the search function
   document.getElementById('station-search').addEventListener('keyup', () => search())
 })
 
+// search goes through the list of stations on the page and filters them based on the user input in the station search field 
 function search() {
   var search_bar = document.getElementById('station-search');
   var filter = search_bar.value.toUpperCase();
@@ -40,12 +43,30 @@ function search() {
       stations[j].style.display = 'none';
     }
   }
+  // if user hits enter while typing, take the first item from the list of station and call timetable function
+  document.getElementById('station-search').addEventListener('keypress', function (e) {
+    if (e.key == 'Enter') {
+      var station_list = document.getElementsByClassName('station');
+      var j = 0;
+      for (i = 0; i < station_list.length; i++) {
+        if (station_list[i].style.display != 'none') {
+          var station = station_list[i];
+          var name = station.querySelector('.col-10').innerHTML;
+          var code = station.querySelector('small').innerHTML;
+          if (j === 1) { break; }
+          j++;
+          timetable(code, name);
+        }
+      }
+    }
+  });
 }
 
 function timetable(code, name) {
   // hide the station list and display the result view
   document.getElementById('result-view').style.display = 'block';
   document.getElementById('station-list').style.display = 'none';
+  document.getElementById('station-list').innerHTML = '';
 
   document.getElementById('result-view').innerHTML = `<h4 class="headline">${name}</h4>
                                                         <div class="row">
@@ -110,7 +131,7 @@ function timetable(code, name) {
                                   <div class="col-2 d-flex justify-content-center">${trainID}</div>
                                   <div class="col-4">${departureStation}</div>
                                   <div class="col-2 d-flex justify-content-center">${track}</div>
-                                  <div class="col-2"><span class="red">${estimateTime}</span></div>
+                                  <div class="col-2 d-flex justify-content-end red">${estimateTime}</div>
                               </div>`;
           arr_div.appendChild(arr_row);
         }
@@ -158,10 +179,11 @@ function timetable(code, name) {
                               <div class="col-2 d-flex justify-content-center">${trainID}</div>
                               <div class="col-4">${destinationStation}</div>
                               <div class="col-2 d-flex justify-content-center">${track}</div>
-                              <div class="col-2"><span class="red">${estimateTime}</span></div>
+                              <div class="col-2 d-flex justify-content-end red">${estimateTime}</div>
                           </div>`;
           dep_div.appendChild(dep_row);
         }
       }
     })
+  event.preventDefault();
 }
