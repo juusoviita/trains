@@ -68,6 +68,10 @@ small {
   font-weight: bold;
 }
 
+nav {
+  background-color:#009933;
+}
+
 @media (orientation: portrait) {
   body {
     background-image: url("background2.jpg");
