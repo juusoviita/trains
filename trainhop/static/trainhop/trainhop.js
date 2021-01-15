@@ -53,9 +53,8 @@ function search() {
           var station = station_list[i];
           var name = station.querySelector('.col-10').innerHTML;
           var code = station.querySelector('small').innerHTML;
-          if (j === 1) { break; }
-          j++;
           timetable(code, name);
+          break;
         }
       }
     }
@@ -127,7 +126,7 @@ function timetable(code, name) {
           }
 
           arr_row.innerHTML = `<div class="row">
-                                  <div class="col-2">${scheduledTime}</div>
+                                  <div class="col-2"><strong>${scheduledTime}</strong></div>
                                   <div class="col-2 d-flex justify-content-center">${trainID}</div>
                                   <div class="col-4">${departureStation}</div>
                                   <div class="col-2 d-flex justify-content-center">${track}</div>
@@ -175,7 +174,7 @@ function timetable(code, name) {
           }
 
           dep_row.innerHTML = `<div class="row">
-                              <div class="col-2">${scheduledTime}</div>
+                              <div class="col-2"><strong>${scheduledTime}</strong></div>
                               <div class="col-2 d-flex justify-content-center">${trainID}</div>
                               <div class="col-4">${destinationStation}</div>
                               <div class="col-2 d-flex justify-content-center">${track}</div>

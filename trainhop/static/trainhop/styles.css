@@ -4,6 +4,11 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
+#station-search {
+  width: 280px;
+}
+
 #station-list {
   background: rgba(255, 255, 255, 0.7);
   margin-top: 20px;

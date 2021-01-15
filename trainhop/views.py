@@ -74,6 +74,7 @@ def timetable(request):
 
                         scheduledTime = scheduledTime.replace(tzinfo=utc)
                         scheduledTime = scheduledTime.astimezone(hki)
+                        scheduledDate = scheduledTime.date()
                         scheduledTime = scheduledTime.time()
                         scheduledTime = time_conversion(scheduledTime)
 
@@ -94,18 +95,20 @@ def timetable(request):
 
                         # check whether the row['type'] is ARRIVAL or DEPARTURE and assign to the correct list
                         if row['type'] == 'ARRIVAL':
-                            arrivals.append({'category': trainCategory, 'id': trainID, 'track': track,
+                            arrivals.append({'category': trainCategory, 'id': trainID, 'track': track, 'scheduledDate': scheduledDate,
                                              'scheduledTime': scheduledTime, 'estimateTime': liveEstimateTime, 'timeDifference': difference, 'departureStation': departureStation})
 
                         elif row['type'] == 'DEPARTURE':
-                            departures.append({'category': trainCategory, 'id': trainID, 'track': track,
+                            departures.append({'category': trainCategory, 'id': trainID, 'track': track, 'scheduledDate': scheduledDate,
                                                'scheduledTime': scheduledTime, 'estimateTime': liveEstimateTime, 'timeDifference': difference, 'destinationStation': destinationStation})
 
         # sort arrivals and departures based on scheduledTime and ad to a dict
         if len(arrivals) == 0:
             arrivals_dict = {'message': 'No arrivals'}
         else:
-            arrivals = sorted(arrivals, key=itemgetter('scheduledTime'))
+            arrivals = sorted(arrivals, key=itemgetter(
+                'scheduledDate', 'scheduledTime'))
+            # arrivals = sorted(arrivals, key=itemgetter('scheduledTime'))
             arrivals_dict = {}
             i = 0
             for arrival in arrivals:
@@ -115,7 +118,9 @@ def timetable(request):
         if len(departures) == 0:
             departures_dict = {'message': 'No departures'}
         else:
-            departures = sorted(departures, key=itemgetter('scheduledTime'))
+            departures = sorted(departures, key=itemgetter(
+                'scheduledDate', 'scheduledTime'))
+            # departures = sorted(departures, key=itemgetter('scheduledTime'))
             departures_dict = {}
             j = 0
             for departure in departures:
@@ -166,6 +171,7 @@ def station_name(stations, code):
     return(name)
 
 
+# takes a datetime.time object as an argument and converts it to string
 def time_conversion(time):
     if time.second >= 30:
         if time.minute == 59:
@@ -177,6 +183,9 @@ def time_conversion(time):
     else:
         minute = str(time.minute)
         hour = str(time.hour)
+
+    if int(hour) < 10:
+        hour = '0' + hour
 
     if len(minute) == 1:
         new_time = hour + ":" + "0" + minute
