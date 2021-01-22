@@ -75,10 +75,16 @@ small {
   padding: 5px 5px 5px 5px;
 }
 
-.red {
-  color: darksalmon;
+.timetable-odd .red {
+  color: salmon;
   font-weight: bold;
 }
+
+.timetable-even .red {
+  color: firebrick;
+  font-weight: bold;
+}
+
 
 .Y, .X, .U, .L, .E, .A, .I, .P, .K, .T, .R, .D, .Z, .M {
   width: 28px;
