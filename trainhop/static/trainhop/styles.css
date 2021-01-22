@@ -56,6 +56,11 @@ small {
   margin-bottom: 15px;
 }
 
+.headline:hover {
+  cursor: pointer;
+  color:rgba(0,153,51, 0.7);
+}
+
 .toprow {
   font-weight: bold;
   color: whitesmoke;
@@ -75,8 +80,31 @@ small {
   font-weight: bold;
 }
 
-nav {
+.Y, .X, .U, .L, .E, .A, .I, .P, .K, .T, .R, .D, .Z, .M {
+  width: 28px;
+  height: 28px;
+  border: 2px solid whitesmoke;
+  border-radius: 50%;
+  font-weight: bold;
+  color: whitesmoke;
+  text-align: center;
+  margin: auto;
+}
+
+.Y, .X, .U, .L, .E, .A {
   background-color:#009933;
+}
+
+.I, .P, .K, .T, .R, .D {
+  background-color: dodgerblue;
+}
+
+.Z {
+  background-color: firebrick;
+}
+
+.M {
+  background-color: darkgoldenrod;
 }
 
 @media (orientation: portrait) {
@@ -92,5 +120,16 @@ nav {
   }
   #result-view {
     font-size:  6px;
+  }
+
+  .Y, .X, .U, .L, .E, .A, .I, .P, .K, .T, .R, .D, .Z, .M {
+    width: 20px;
+    height: 20px;
+    border: 1px solid whitesmoke;
+    border-radius: 50%;
+    font-weight: bold;
+    color: whitesmoke;
+    text-align: center;
+    margin: auto;
   }
 }

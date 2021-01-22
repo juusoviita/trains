@@ -67,7 +67,7 @@ function timetable(code, name) {
   document.getElementById('station-list').style.display = 'none';
   document.getElementById('station-list').innerHTML = '';
 
-  document.getElementById('result-view').innerHTML = `<h4 class="headline">${name}</h4>
+  document.getElementById('result-view').innerHTML = `<h4 id="headline-${name}" class="headline">${name}</h4>
                                                         <div class="row">
                                                         <div id="departures" class="col-sm"></div>
                                                         <div id="arrivals" class="col-sm"></div>
@@ -76,6 +76,9 @@ function timetable(code, name) {
   // clear and hide the search box
   document.getElementById('station-search').value = '';
   document.getElementById('station-search').style.display = 'none';
+
+  // reload the page by clicking the headline
+  document.getElementById(`headline-${name}`).addEventListener('click', () => timetable(code, name));
 
   // get the data from the API and display
   fetch('/timetable', {
@@ -127,7 +130,7 @@ function timetable(code, name) {
 
           arr_row.innerHTML = `<div class="row">
                                   <div class="col-2"><strong>${scheduledTime}</strong></div>
-                                  <div class="col-2 d-flex justify-content-center">${trainID}</div>
+                                  <div class="col-2 d-flex justify-content-center"><div class="${trainID}">${trainID}</div></div>
                                   <div class="col-4">${departureStation}</div>
                                   <div class="col-2 d-flex justify-content-center">${track}</div>
                                   <div class="col-2 d-flex justify-content-end red">${estimateTime}</div>
@@ -175,7 +178,7 @@ function timetable(code, name) {
 
           dep_row.innerHTML = `<div class="row">
                               <div class="col-2"><strong>${scheduledTime}</strong></div>
-                              <div class="col-2 d-flex justify-content-center">${trainID}</div>
+                              <div class="col-2 d-flex justify-content-center"><div class="${trainID}">${trainID}</div></div>
                               <div class="col-4">${destinationStation}</div>
                               <div class="col-2 d-flex justify-content-center">${track}</div>
                               <div class="col-2 d-flex justify-content-end red">${estimateTime}</div>
